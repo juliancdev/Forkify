@@ -29,13 +29,13 @@ const createRecipeObject = function (data) {
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await AJAX(`${API_URL}${id}&key=${API_KEY}`);
+    const data = await AJAX(`${API_URL}${id}?&key=${API_KEY}`);
     state.recipe = createRecipeObject(data);
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
   } catch (error) {
-    //throw the error again, so we can use it in the controller.js
+    // Throw the error again, so we can use it in the controller.js
     throw error;
   }
 };
@@ -80,9 +80,9 @@ const persistBookmarks = function () {
 };
 
 export const addBookmark = function (recipe) {
-  //add bookmark
+  // Add bookmark
   state.bookmarks.push(recipe);
-  //mark current recipe as bookmark
+  // Mark current recipe as bookmark
   if (recipe.id === state.recipe.id) {
     state.recipe.bookmarked = true;
   }

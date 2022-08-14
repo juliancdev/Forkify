@@ -19,14 +19,14 @@ const controlRecipes = async function () {
 
     recipeView.renderSpinner();
 
-    //update results view to mark selected search results
+    // Update results view to mark selected search results
     resultsView.update(model.getSearchResultsPage());
     bookmarksView.update(model.state.bookmarks);
 
-    //loading recipe
+    // Loading recipe
     await model.loadRecipe(id);
 
-    //rendering recipe
+    // Rendering recipe
     recipeView.render(model.state.recipe);
   } catch (error) {
     recipeView.renderError();
@@ -52,20 +52,20 @@ const controlPagination = function (goToPage) {
 };
 
 const controlServings = function (newServings) {
-  //update recipe servings (in state)
-  //update recipe view
+  // Update recipe servings (in state)
+  // Update recipe view
   model.updateServings(newServings);
   recipeView.update(model.state.recipe);
 };
 
 const controlAddBookmark = function () {
-  //add/remove bookmark
+  // Add / remove bookmark
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else if (model.state.recipe.bookmarked)
     model.deleteBookmark(model.state.recipe.id);
-  //Update recipe view
+  // Update recipe view
   recipeView.update(model.state.recipe);
-  //render bookmarks
+  // Render bookmarks
   bookmarksView.render(model.state.bookmarks);
 };
 
@@ -75,21 +75,21 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
-    //show spinner
+    // Show spinner
     addRecipeView.renderSpinner();
 
-    //upload recipe data
+    // Upload recipe data
     await model.uploadRecipe(newRecipe);
-    //render recipe
+    // Render recipe
     recipeView.render(model.state.recipe);
-    //success message
+    // Success message
     addRecipeView.renderMessage();
-    //render bookmark
+    // Render bookmark
     bookmarksView.render(model.state.bookmarks);
-    //change ID in url
-    window.history.pushState(null, '', `#${modle.state.recipe.id}`); //to change the url without reloading the page
+    // Change ID in url
+    window.history.pushState(null, '', `#${modle.state.recipe.id}`); // To change the url without reloading the page
     // window.history.back();
-    //close form window
+    // Close form window
     setTimeout(function () {
       addRecipeView.toggleWindow();
     }, MODAL_CLOSE_SECONDS * 1000);

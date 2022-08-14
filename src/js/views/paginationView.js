@@ -5,7 +5,6 @@ class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
   addHandleClick(handler) {
     this._parentElement.addEventListener('click', function (event) {
-      //it's a bit like queryselector but instead of searching downards the dom tree, it searches upwards the dom three
       const btn = event.target.closest('.btn--inline');
       if (!btn) return;
       const goToPage = +btn.dataset.goTo;
@@ -18,17 +17,17 @@ class PaginationView extends View {
       this._data.results.length / this._data.resultsPerPage
     ); //Math.ceil to round
 
-    //page 1, and there are other pages
+    // Page 1, and there are other pages
     if (currentPage === 1 && numPages > 1) {
       return this._generateMarkupButton(currentPage, 'next');
     }
 
-    //last page
+    // Last page
     if (currentPage === numPages && numPages > 1) {
       return this._generateMarkupButton(currentPage, 'prev');
     }
 
-    //other page
+    // Other page
     if (currentPage < numPages) {
       return `${this._generateMarkupButton(
         currentPage,
@@ -36,7 +35,7 @@ class PaginationView extends View {
       )}${this._generateMarkupButton(currentPage, 'next')}`;
     }
 
-    //page 1, and there are no other pages
+    // Page 1, and there are no other pages
     return '';
   }
   _generateMarkupButton(currentPage, type) {
